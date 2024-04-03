@@ -1,0 +1,49 @@
+.btn-ord{
+    color: white !important;
+    font-weight: bold !important;
+    background-color: #ff4d04 !important;
+    padding: 7px 10px !important;
+    border-radius: 1% !important;
+}
+.bold-text {
+    font-weight: bold !important;
+    color: black;
+  }
+  
+
+  .about-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .about-button {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .about-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .about-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .about-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    color: black;
+  }
+  
+  .about-menu li:last-child {
+    border-bottom: none;
+  }
+
+  

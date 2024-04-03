@@ -1,0 +1,26 @@
+.combtn{
+    background-color: #ff4d04 !important;
+    width: 20%;
+    padding: 13px !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+
+.combtn:hover{
+    border: 2px solid #ff4d04 !important;
+    color: #ff4d04 !important;
+    background-color: white !important;
+}
+
+.combtn2{
+    background-color: #ff4d04 !important;
+    width: 100%;
+    padding: 13px !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+.combtn2:hover{
+    border: 2px solid #ff4d04 !important;
+    color: #ff4d04 !important;
+    background-color: white !important;
+}

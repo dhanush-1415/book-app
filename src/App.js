@@ -1,24 +1,40 @@
-import logo from './logo.svg';
+import React from 'react';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import Home from './pages/HomePage';
+import About from './pages/About';
+import Account from './pages/Account';
+import Header from '../src/components/Header/Header';
+import Footer from './components/Footer/Footer';
+import SignIn from './components/Auth/SignIn';
+import Login from './components/Auth/Login';
+import { AuthProvider } from './components/Auth/AuthContet';
+import ProductPage from './components/Product/productpop';
+import BookList from './pages/BookList';
+import Checkout from './pages/Checkout';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter basename="/">
+      <AuthProvider>
+        <ToastContainer />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/product/:productcode" element={<ProductPage />} />
+          <Route path="/products/:tagCode" element={<BookList />} />
+          <Route path="/account/register" element={<SignIn/>} />
+          <Route path="/account/login" element={<Login/>} />
+          <Route path="/my-account/:activepage" element={<Account />} />
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+        <Footer />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

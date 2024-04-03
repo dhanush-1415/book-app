@@ -1,38 +1,109 @@
-.App {
-  text-align: center;
+.typo1{
+  font-size:40px !important;
+  font-weight:bold !important;
+}
+.typo2 {
+  font-size: 22px !important;
+  font-weight: bold !important;
+  color: black !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.typo2:hover {
+  color: #f65d4e !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.typo3{
+  font-size:15px !important;
+  font-weight:bold !important;
+  color:grey !important;
+}
+.typo4{
+  font-size:25px !important;
+  font-weight:bold !important;
+  color:#f65d4e !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.typo5{
+  font-size:18px !important;
+  font-weight:bold !important;
+  color:grey !important;
 }
 
-.App-link {
-  color: #61dafb;
+.typo6{
+  font-size:50px !important;
+  font-weight:bold !important;
+}
+.typo7{
+  font-size:20px !important;
+}
+.typo8{
+  font-size:25px !important;
+}
+.typo9{
+  font-size:50px !important;
+}
+.typo10{
+  font-size:25px !important;
+  color:#F65D4E !important;
+  font-weight: bold !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cmn-btn{
+  background: #f65d4e !important;
+  color:white !important;
+  border:none !important;
+  padding: 25px !important;
+  border-radius: 50px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  font-size: 15px !important;
+}
+
+.cmn-btn2{
+  background: #f65d4e !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  font-size: 15px !important;
+  width: 100%;
+  padding: 17px !important;
+  font-weight: bold !important;
+  color: white !important;
+  cursor:pointer;
+  border:none !important;
+}
+
+.cmn-btn3{
+  background: #f65d4e !important;
+  width: 20%;
+  padding: 13px !important;
+  font-weight: bold !important;
+  color: white !important;
+}
+
+.cmn-btn4{
+  background: #f65d4e !important;
+  width: 100%;
+  padding: 13px !important;
+  font-weight: bold !important;
+  color: white !important;
+}
+
+
+.date-input-container {
+  margin-bottom: 20px;
+}
+
+.date-input-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.date-input-container input[type="date"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 30%;
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
 }

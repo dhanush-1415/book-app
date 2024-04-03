@@ -1,0 +1,56 @@
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius:20px !important;
+}
+
+.option-buttons {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.option-buttons span {
+    border-radius: 50%;
+    color: black;
+    border: none;
+    cursor: pointer;
+    background-color:white;
+    /* padding:13px 10px; */
+    display:flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin:10px 0px;
+}
+
+.image-container:hover .option-buttons {
+    opacity: 1;
+    transform: translate(50%, -50%);
+}
+
+.side-banner{
+    position: relative;
+}
+
+.text-cont{
+    position: absolute;
+    bottom:7%;
+    left: 10%;
+}
+
+
+.img-cont2{
+    position: relative;
+}
+
+.text-cont2{
+    position: absolute;
+    bottom: 15%;
+    left: 2%;
+}

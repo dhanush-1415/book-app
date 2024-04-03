@@ -1,0 +1,9 @@
+.authbtn{
+    border: 1px solid var(--col2) !important;
+    padding: 10px 20px !important;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    width: 100% !important;
+    text-align: center !important;
+    background: #ff4d04 !important;
+}
