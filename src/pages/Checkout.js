@@ -17,11 +17,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { book } from "../config";
 // import { loadStripe } from '@stripe/stripe-js';
 import CircularProgress from '@mui/material/CircularProgress';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+
 
 
 const Checkout = () => {
@@ -58,16 +67,30 @@ const Checkout = () => {
 
 
 
+    console.log(dataArray , "jjjjjjjjjjjjjjjjjjjjjjj")
+
+
+
+    const [value, setValue] = React.useState('female');
+
+    const handleChange = (event) => {
+      setValue(event.target.value);
+    };
+
+
+
     useEffect(() => {
       setSubtotal(0);
+
+      // localStorage.clear();
+
     
       const storedUserId = ((JSON.parse(localStorage.getItem('bookUserToken')) || [])[0] || {}).B2CCustomerId;
     
       const cartArray = JSON.parse(localStorage.getItem('bookUserCart')) || {};
     
       const shopArray = cartArray[storedUserId] || [];
-    
-    
+        
       if (shopArray && shopArray.length) {
         let total = 0;
     
@@ -244,22 +267,23 @@ const Checkout = () => {
         if(dataArray && dataArray.length){
 
             try {
-              const response = await fetch('https://book-app-payment.onrender.com/create-order', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ dataArray })
-              });
+              // const response = await fetch('https://book-app-payment.onrender.com/create-order', {
+              //   method: 'POST',
+              //   headers: {
+              //     'Content-Type': 'application/json'
+              //   },
+              //   body: JSON.stringify({ dataArray })
+              // });
             
-              if (!response.ok) {
-                throw new Error('Failed to initiate checkout');
-              }
+              // if (!response.ok) {
+              //   throw new Error('Failed to initiate checkout');
+              // }
             
-              const data = await response.json();
-              const orderId = data.orderId;
-              setboxload(false)
-              window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderId}`;
+              // const data = await response.json();
+              // const orderId = data.orderId;
+              // setboxload(false)
+              // window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderId}`;
+              
             } catch (err) {
               console.error('Failed to initiate checkout:', err);
               setboxload(false);
@@ -270,7 +294,165 @@ const Checkout = () => {
           }
       };
 
+    //   function createOrder(data, actions) {
+    //     const totalAmount = getTotalPrice();
+    
+    //     return actions.order.create({
+    //         purchase_units: [{
+    //             amount: {
+    //                 value: totalAmount.toString(),
+    //                 breakdown: {
+    //                     item_total: {
+    //                         currency_code: "USD",
+    //                         value: totalAmount.toString(),
+    //                     }
+    //                 }
+    //             },
+    //             items: dataArray.map(item => ({
+    //                 name: item.Title,
+    //                 quantity: item.CartCount.toString(),
+    //                 unit_amount: {
+    //                     currency_code: "USD",
+    //                     value: item.SellingPrice.toString(),
+    //                 },
+    //             }))
+    //         }]
+    //     });    
+    // }
 
+    // function onApprove(data, actions) {
+    //     return actions.order.capture().then(function(details) {
+    //         alert("Transaction completed by " + details.payer.name.given_name);
+    //     });
+    // }
+
+    // function getTotalPrice() {
+    //     return dataArray.reduce((total, item) => total + (item.CartCount * item.SellingPrice), 0);
+    // }
+
+
+
+   
+  //   function createOrder(data, actions) {
+  //     const totalAmount = getTotalPrice();
+  //     return actions.order.create({
+  //         purchase_units: [{
+  //             amount: {
+  //                 value: totalAmount.toString(),
+  //                 currency_code: "SGD",
+  //                 breakdown: {
+  //                     item_total: {
+  //                         currency_code: "SGD",
+  //                         value: totalAmount.toString(),
+  //                     }
+  //                 }
+  //             },
+  //             items: dataArray.map(item => ({
+  //                 name: item.Title,
+  //                 quantity: item.CartCount.toString(),
+  //                 unit_amount: {
+  //                     currency_code: "SGD",
+  //                     value: item.SellingPrice.toString(),
+  //                 },
+  //             })),
+  //             shipping: {
+  //                 name: {
+  //                     full_name: "John Doe"
+  //                 },
+  //                 address: {
+  //                     address_line_1: "123 Shipping St.",
+  //                     address_line_2: "Unit 5",
+  //                     admin_area_2: "Singapore",
+  //                     admin_area_1: "SG",
+  //                     postal_code: "12345",
+  //                     country_code: "SG"
+  //                 }
+  //             }
+  //         }],
+  //         application_context: {
+  //             shipping_preference: 'SET_PROVIDED_ADDRESS'
+  //         },
+  //         intent: 'CAPTURE'
+  //     });
+  // }
+
+  // function onApprove(data, actions) {
+  //     return actions.order.capture().then(function(details) {
+  //         alert("Transaction completed by " + details.payer.name.given_name);
+  //         // Redirect to success URL
+  //         window.location.href = "YOUR_SUCCESS_URL";
+  //     });
+  // }
+
+  // function onCancel(data) {
+  //     // Redirect to failure URL
+  //     window.location.href = "YOUR_FAILURE_URL";
+  // }
+
+  // function getTotalPrice() {
+  //     return dataArray.reduce((total, item) => total + (item.CartCount * item.SellingPrice), 0);
+  // }
+
+
+  function createOrder(data, actions) {
+    const totalAmount = getTotalPrice();
+    return actions.order.create({
+        purchase_units: [{
+            amount: {
+                value: totalAmount.toString(),
+                currency_code: "SGD",
+                breakdown: {
+                    item_total: {
+                        currency_code: "SGD",
+                        value: totalAmount.toString(),
+                    }
+                }
+            },
+            items: dataArray.map(item => ({
+                name: item.Title,
+                quantity: item.CartCount.toString(),
+                unit_amount: {
+                    currency_code: "SGD",
+                    value: item.SellingPrice.toString(),
+                },
+            })),
+            shipping: {
+                name: {
+                    full_name: "John Doe"
+                },
+                address: {
+                    address_line_1: "123 Shipping St.",
+                    address_line_2: "Unit 5",
+                    admin_area_2: "Singapore",
+                    admin_area_1: "SG",
+                    postal_code: "12345",
+                    country_code: "SG"
+                }
+            }
+        }],
+        application_context: {
+            shipping_preference: 'SET_PROVIDED_ADDRESS'
+        },
+        intent: 'CAPTURE'
+    });
+}
+
+function onApprove(data, actions) {
+    return actions.order.capture().then(function(details) {
+        alert("Transaction completed by " + details.payer.name.given_name);
+        // Redirect to success URL
+        window.location.href = "YOUR_SUCCESS_URL";
+    });
+}
+
+function onCancel(data) {
+    // Redirect to failure URL
+    window.location.href = "YOUR_FAILURE_URL";
+}
+
+function getTotalPrice() {
+    return dataArray.reduce((total, item) => total + (item.CartCount * item.SellingPrice), 0);
+}
 
       const handleOrder = () => {
 
@@ -429,7 +611,7 @@ const Checkout = () => {
                                 <Grid container justifyContent='space-between' sx={{padding:'20px'}}>
                                     {addressData && addressData.length > 0 && addressData.map((item, index) => (
                                     <>
-                                        <Grid key={item.DeliveryId} xs={12} md={5.8} mt={2} sx={{ border: selectedAddress === item.DeliveryId ? '2px solid #ff4d04' : '1px solid grey' }} onClick={(e) => handleAddressSelect(item.DeliveryId)}>
+                                        <Grid key={index} xs={12} md={5.8} mt={2} sx={{ border: selectedAddress === item.DeliveryId ? '2px solid #ff4d04' : '1px solid grey' }} onClick={(e) => handleAddressSelect(item.DeliveryId)}>
                                         < DeleteIcon 
                                         sx={{float:'right' , marginTop:'-12px' , marginRight:'-12px' , color:'#ff4d04' , cursor:'pointer'}} 
                                         onClick={(e)=> {handleClickOpen(item.OrgId , item.DeliveryId , item.CustomerId , item.Name)}} />
@@ -460,7 +642,7 @@ const Checkout = () => {
                             <Typography className="typo7">Delivery Date</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <div className="date-input-container">
+                                {/* <div className="date-input-container">
                                     <label htmlFor="datePicker">Select Delivery Date:</label>
                                     <input
                                         type="date"
@@ -470,7 +652,20 @@ const Checkout = () => {
                                         min={today}
                                         max={maxDate}
                                     />
-                                    </div>
+                                    </div> */}
+
+                                  <FormControl>
+                                    <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+                                    <RadioGroup
+                                      aria-labelledby="demo-controlled-radio-buttons-group"
+                                      name="controlled-radio-buttons-group"
+                                      value={value}
+                                      onChange={handleChange}
+                                    >
+                                      <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                      <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                    </RadioGroup>
+                                  </FormControl>
                                 <Grid container justifyContent='flex-end' sx={{padding:'20px'}}>
                                     <Button className="combtn3" onClick={(e)=>{handleNext(3)}}>Next Step</Button>
                                 </Grid>
@@ -564,7 +759,29 @@ const Checkout = () => {
                                 </Grid>
                             </Grid>
                             <Grid item sx={{padding:'10px 0'}}>
-                                <button  className='cmn-btn2' style={{background:'F65D4E'}} onClick={handleOrder} >{boxLoad ? <CircularProgress sx={{color:'white'}} /> : "Order Now"}</button>
+                                {/* <button  className='cmn-btn2' style={{background:'F65D4E'}} onClick={handleOrder} >{boxLoad ? <CircularProgress sx={{color:'white'}} /> : "Order Now"}</button> */}
+                                {/* <PayPalScriptProvider options={{ 
+                                    clientId: "ARczUVWk1e-x6ejyg0HiZpTzhHrUOkwEFl5bEN603Re_g29aKHtH9QTc7OICazEmdXh0nAg-RSiIuCED",
+                                    currency: "SGD",
+                                }}>
+                                    <PayPalButtons
+                                        createOrder={(data, actions) => createOrder(data, actions)}
+                                        onApprove={(data, actions) => onApprove(data, actions)}
+                                    />
+                                </PayPalScriptProvider> */}
+
+                                <PayPalScriptProvider options={{ 
+                                    clientId: "ARczUVWk1e-x6ejyg0HiZpTzhHrUOkwEFl5bEN603Re_g29aKHtH9QTc7OICazEmdXh0nAg-RSiIuCED",
+                                     currency: "SGD",
+                                }}>
+                                      <PayPalButtons
+                                        createOrder={(data, actions) => createOrder(data, actions)}
+                                        onApprove={(data, actions) => onApprove(data, actions)}
+                                        onCancel={(data) => onCancel(data)}
+                                        style={{ layout: 'vertical' }}
+                                    />
+                                </PayPalScriptProvider>
+
                             </Grid>
                         </Grid>
                     </Grid>
