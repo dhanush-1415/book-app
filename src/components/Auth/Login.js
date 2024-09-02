@@ -148,12 +148,15 @@ export default function Login() {
                 "BranchCode": "HQ"
               })
 
-              const userId = response.Data.B2CCustomerId;
+              const userId = response.Data[0].B2CCustomerId;
+
+
 
               let cartArray = JSON.parse(localStorage.getItem('bookUserCart')) || {};
 
               if (!cartArray[userId]) {
                 cartArray[userId] = [];
+
                 localStorage.setItem('bookUserCart', JSON.stringify(cartArray));
               }
 
@@ -164,7 +167,7 @@ export default function Login() {
 
               setTimeout(() => {
                 window.location.href = '/'
-              }, 2000);
+              }, 1000);
               
             }
             else{

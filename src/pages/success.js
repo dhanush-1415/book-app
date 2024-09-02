@@ -6,7 +6,7 @@ import { createCustomerOrder } from "../apiCalls";
 import { toast } from "react-toastify";
 
 const StyledTableHead = styled(TableHead)({
-    backgroundColor: "#ff4d04",
+    backgroundColor: "#f65d4e",
     color:'white',
     fontWeight:'bold',
   });
@@ -27,10 +27,12 @@ const Success = () => {
 
     const [productData , setProducts] = useState();
 
+
     const createOrder = (data) => {
 
         createCustomerOrder(data)
         .then((data)=>{
+
           if(data.Message === 'Sucess'){
             toast.success("Order placed successfully")
           }
@@ -44,24 +46,22 @@ const Success = () => {
 
       const orderDetails = JSON.parse(localStorage.getItem("orderDetails")) || [] ;
 
-      const cartArray = JSON.parse(localStorage.getItem('makanUserCart')) || {};
+      const cartArray = JSON.parse(localStorage.getItem('bookUserCart')) || {};
 
-      const storedUserId = ((JSON.parse(localStorage.getItem('makanUserToken')) || [])[0] || {}).B2CCustomerId;
+      const storedUserId = ((JSON.parse(localStorage.getItem('bookUserToken')) || [])[0] || {}).B2CCustomerId;
 
 
       if (orderDetails && orderDetails.length) {
         setOrderData(orderDetails);
         createOrder(orderDetails[0]);
-        setProducts(orderDetails[0].OrderDetail)
-        if(orderDetails[0].BrachCode === "MATE"){
-            const mateArray = cartArray[storedUserId]['MATE'];
-            mateArray.length = 0 ;
-        }else if(orderDetails[0].BrachCode === "MART"){
-            const martArray = cartArray[storedUserId]['MART'];
-            martArray.length = 0 ;
-        }
+        setProducts(orderDetails[0].OrderDetail[0]);
 
-        localStorage.setItem('makanUserCart', JSON.stringify(cartArray));
+        const userCart = cartArray[storedUserId];
+
+        userCart.length = 0 ;
+
+        localStorage.setItem('bookUserCart', JSON.stringify(cartArray));
+
 
       } else {
         console.log("No data found in localStorage");
@@ -75,12 +75,21 @@ const Success = () => {
         window.location.href='/';
     }  
 
+
+    if(productData  && !productData.length){
+      return(
+        <>
+          <h1>Loading ...</h1>
+        </>
+      )
+    }
+
   return (
     <>
       <Grid sx={{width:'70%' ,margin:'100px auto'}}>
         <Grid item  sx={{margin:'50px 0'}}>
-            <Grid container sx={{background:'#f8f9fb' , borderRadius:'5px' , padding:'25px' , border:'1px slid grey'}}>
-                <DoneIcon sx={{background:'#02b290' , padding:'5px' , margin:'0px 10px' , borderRadius:'50%' , color:'white'}} /><Typography>Thank you. Your order has been received.</Typography>
+            <Grid container sx={{background:'#f65d4e' , borderRadius:'5px' , padding:'25px' , border:'1px slid grey'}}>
+                <DoneIcon sx={{background:'#02b290' , padding:'5px' , margin:'0px 10px' , borderRadius:'50%' , color:'white'}} /><Typography sx={{color:'white' , paddingTop:'7px'}}>Thank you. Your order has been received.</Typography>
             </Grid>
         </Grid>
         <Grid item sx={{margin:'50px 0'}}>
@@ -104,7 +113,7 @@ const Success = () => {
                                 {row.ProductName}
                             </StyledTableCell>
                             <StyledTableCell>{row.Qty}</StyledTableCell>
-                            <StyledTableCell>{row.Total}</StyledTableCell>
+                            <StyledTableCell>${row.Total}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                         </TableBody>
@@ -121,13 +130,13 @@ const Success = () => {
                 </Grid>
                 <Grid item>
                     <Typography sx={{fontWeight:'bold' , textAlign:'right' , padding:'5px 0'}}>S$ {orderData && orderData.length && orderData[0].SubTotal}</Typography>
-                    <Typography sx={{fontWeight:'bold' , textAlign:'right' , padding:'5px 0'}}>S$ {orderData && orderData.length && orderData[0].ShippingCost.toFixed(2)}</Typography>
+                    <Typography sx={{fontWeight:'bold' , textAlign:'right' , padding:'5px 0'}}>S$ {orderData && orderData.length && orderData[0].ShippingCost}</Typography>
                     <Typography sx={{fontWeight:'bold' , textAlign:'right' , padding:'5px 0'}}>S$ {orderData && orderData.length && orderData[0].NetTotal}</Typography>
                 </Grid>
             </Grid>
         </Grid>
         <Grid>
-            <button className="combtn" onClick={handleHomepage}>Return to homepage</button>
+            {/* <button className="combtn" style={{background:'#f65d4e'}} onClick={handleHomepage}>Return to homepage</button> */}
         </Grid>
       </Grid>
     </>

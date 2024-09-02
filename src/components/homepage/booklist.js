@@ -24,11 +24,11 @@ const BookList = () => {
 
     // localStorage.setItem('bookUserCart', JSON.stringify({}));
 
-    // localStorage.clear();
     
 
     const fetchDataByTag = async (tag, setData) => {
 
+        // localStorage.clear();
 
         try {
           const data = await getByTagData(tag);

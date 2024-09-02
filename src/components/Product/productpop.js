@@ -195,7 +195,6 @@ const handleAddtoCart = async (code , count) => {
   const handleWishlist = (code , name) => {
 
 
-    console.log(code , name , "kkkkkkkkkkkkkkkk")
     const storedUserId = ((JSON.parse(localStorage.getItem('bookUserToken')) || [])[0] || {}).B2CCustomerId;
 
     if(storedUserId){
@@ -296,41 +295,7 @@ const handleAddtoCart = async (code , count) => {
     {/* <ToastContainer /> */}
       <Grid sx={{width:'90%' , margin:'50px auto'}}>
         <Grid container justifyContent='space-between'>
-          <Grid item md={5.7}>
-            {/* <Grid container justifyContent='space-between'>
-              <Grid item md={3.5}>
-                  <div className='deskscroll'>
-                    {prodData.EcommerceGalleryImages && prodData.EcommerceGalleryImages.length ? (
-                        <>
-                          {prodData.EcommerceGalleryImages.map((image, index) => (
-                              <img key={index} src={image.ImageFilePath || 'https://makanmate.com/wp-content/uploads/2022/09/logo.png'} alt='p1' width='100%' style={{ maxWidth:'200px', maxHeight:'200px'}} />
-                          ))}
-                        </>
-                    ):(
-                      <>
-                            <img src={prodData.ProductImagePath || 'https://makanmate.com/wp-content/uploads/2022/09/logo.png'} alt='p1' width='100%' style={{ maxWidth:'200px', maxHeight:'200px'}} />
-                      </>
-                    )}
-                </div>
-
-              </Grid>
-              <Grid item md={8} sx={{display:'flex' , justifyContent:'center'}}>
-                <img src={prodData.ProductImagePath || 'https://makanmate.com/wp-content/uploads/2022/09/logo.png'} alt='p1' width='100%' style={{ maxWidth:'500px', maxHeight:'500px'}} />
-              </Grid>
-              <div className='mobscroll'>
-                    {prodData.EcommerceGalleryImages && prodData.EcommerceGalleryImages.length ? (
-                        <>
-                          {prodData.EcommerceGalleryImages.map((image, index) => (
-                              <img key={index} src={image.ImageFilePath || 'https://makanmate.com/wp-content/uploads/2022/09/logo.png'} alt='p1' width='100%' style={{ maxWidth:'150px', maxHeight:'150px'}} />
-                          ))}
-                        </>
-                    ):(
-                      <>
-                        <img src={prodData.ProductImagePath || 'https://makanmate.com/wp-content/uploads/2022/09/logo.png'} alt='p1' width='100%' style={{ maxWidth:'150px', maxHeight:'150px'}} />
-                      </>
-                    )}
-                </div>
-            </Grid> */}
+          <Grid item xs={12} sm={12} md={5.7}>
             <Grid container justifyContent='center' sx={{ background:'#f5f5f5' , borderRadius:'20px'}}>
                 <img className='prod-img' src={prodData.BookImage || "https://ap-bookory.myshopify.com/cdn/shop/files/26.jpg?v=1688354383&width=800"} alt="d1" />
             </Grid>

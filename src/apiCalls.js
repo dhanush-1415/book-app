@@ -405,3 +405,47 @@ export const registerUser = async (data) => {
       }
     );
   };
+
+
+  
+  export const createCustomerOrder = async (data) => {
+    const url = `${book.baseUrl}/B2CCustomerOrder/Create`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error('Failed to make order');
+      }
+      return response.json();
+    } catch (error) {
+      console.error('Error making order:', error);
+      throw error;
+    }
+  };
+
+
+  export const getAllOrders = async (data) => {
+    const url = `${book.baseUrl}/B2CCustomerOrder/GetHeaderSearch?searchModel.organisationId=${book.OrgId}&searchModel.customerCode=${data.B2CCustomerId}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    };
+  
+    return fetch(url, options).then(
+      (response) => {
+        return response.json();
+      },
+      (error) => {
+        return error;
+      }
+    );
+  };

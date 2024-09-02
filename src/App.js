@@ -11,11 +11,18 @@ import { AuthProvider } from './components/Auth/AuthContet';
 import ProductPage from './components/Product/productpop';
 import BookList from './pages/BookList';
 import Checkout from './pages/Checkout';
+import Success from './pages/success';
+import Failed from './pages/failed';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+
+  // localStorage.clear();
+
+
+
   return (
     <BrowserRouter basename="/">
       <AuthProvider>
@@ -25,6 +32,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/failed" element={<Failed />} />
           <Route path="/product/:productcode" element={<ProductPage />} />
           <Route path="/products/:tagCode" element={<BookList />} />
           <Route path="/account/register" element={<SignIn/>} />

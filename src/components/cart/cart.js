@@ -46,7 +46,6 @@ const StyledGridItem = styled.div`
 
 const ShoppingCartSidebar = ({cartDataArray, subTotal, isOpen, onClose, remove, updateCount }) => {
 
-
   const [isHovered, setIsHovered] = useState(false);
 
 

@@ -15,7 +15,6 @@ const Category = () => {
 
   const [categories , setCategories ] = useState([]);
 
-  console.log(categories , "PPPPPP")
 
   useEffect(() => {
     const data = {

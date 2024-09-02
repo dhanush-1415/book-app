@@ -37,8 +37,6 @@ const Checkout = () => {
 
     // const stripePromise = loadStripe('pk_test_51HPOEBJ42ylRHBRWbALRWPxpYLXOkmOIZn0tCCQ5gDhtHnqmw3F14GdOeOme1gjPYmINhkDx7pe2KibJEtltGzC400jK7kXbcM'); 
 
-
-    const { shop } = useParams();   
     
     const [addressData , setAddressData] = useState();  
 
@@ -64,10 +62,6 @@ const Checkout = () => {
     const [selectedPayment , setSelectedPayment ] = useState();
 
     const [boxLoad , setboxload ] = useState(false);
-
-
-
-    console.log(dataArray , "jjjjjjjjjjjjjjjjjjjjjjj")
 
 
 
@@ -198,14 +192,22 @@ const Checkout = () => {
       tenDaysFromNow.setDate(new Date().getDate() + 10);
       const maxDate = tenDaysFromNow.toISOString().split('T')[0];
 
-      const handleAddressSelect = (id) => {
-        console.log(id);
+      const [address , setAddress ] = useState();
+
+
+      console.log(address , "llllllllllllll")
+
+      const handleAddressSelect = (id , add) => {
+        setAddress(add);
         setSelectedAddress(id)
         
       }
 
+      const [openPayment , setPayment ] = useState(false);
+
       const handlePaymentselect = (id) => {
         setSelectedPayment(id);
+        setPayment(true);
       }
 
       const handleNext = (level) => {
@@ -418,14 +420,14 @@ const Checkout = () => {
             })),
             shipping: {
                 name: {
-                    full_name: "John Doe"
+                    full_name: address.Name
                 },
                 address: {
-                    address_line_1: "123 Shipping St.",
-                    address_line_2: "Unit 5",
-                    admin_area_2: "Singapore",
+                    address_line_1: address.AddressLine1,
+                    address_line_2: address.UnitNo + " " + address.AddressLine3,
+                    admin_area_2: address.AddressLine3,
                     admin_area_1: "SG",
-                    postal_code: "12345",
+                    postal_code: address.PostalCode,
                     country_code: "SG"
                 }
             }
@@ -439,15 +441,16 @@ const Checkout = () => {
 
 function onApprove(data, actions) {
     return actions.order.capture().then(function(details) {
-        alert("Transaction completed by " + details.payer.name.given_name);
+        toast.success("Transaction completed by " + details.payer.name.given_name);
         // Redirect to success URL
-        window.location.href = "YOUR_SUCCESS_URL";
+        handleOrder()
+        window.location.href = "/success";
     });
 }
 
 function onCancel(data) {
     // Redirect to failure URL
-    window.location.href = "YOUR_FAILURE_URL";
+    window.location.href = "/failed";
 }
 
 function getTotalPrice() {
@@ -468,11 +471,9 @@ function getTotalPrice() {
 
             const storedUser = ((JSON.parse(localStorage.getItem('bookUserToken')) || [])[0] || {});
 
-    
             const cartArray = JSON.parse(localStorage.getItem('bookUserCart')) || {};
-        
-            const shopArray = cartArray[storedUserId] ? cartArray[storedUserId][shop] || [] : [];
-
+    
+            const shopArray = cartArray[storedUserId] || [];
 
             let address;
 
@@ -486,7 +487,7 @@ function getTotalPrice() {
 
             const temp = {
                 "OrgId": book.OrgId,
-                "BrachCode": shop,
+                "BrachCode": "",
                 "OrderNo": "",
                 "MobileNo": book.MobileNo,
                 "EmailId": book.EmailId,
@@ -560,12 +561,88 @@ function getTotalPrice() {
                   })        
               }
 
+              const temp2 = {
+                "OrgId": book.OrgId,
+                "BranchCode": "",
+                "OrderNo": "",
+                "MobileNo": book.MobileNo,
+                "EmailId": book.EmailId,
+                "OrderDate": new Date(),
+                "CustomerId": storedUserId ,
+                "CustomerName": storedUser.B2CCustomerName,
+                "CustomerAddress": address.AddressLine1 + ' ' + address.FloorNo + ' ' + address.UnitNo + ' ' + address.AddressLine3,
+                "PostalCode": address.PostalCode,
+                "TaxCode": 0,
+                "TaxType": "",
+                "TaxPerc": 0,
+                "CurrencyCode": "SGD",
+                "CurrencyRate": 0,
+                "Total": subTotal.toFixed(2),
+                "BillDiscount": 0,
+                "BillDiscountPerc": 0,
+                "SubTotal": subTotal.toFixed(2),
+                "Tax": 0,
+                "NetTotal": Number((subTotal + shipping).toFixed(2)),
+                "PaymentType": "card",
+                "PaidAmount": 0,
+                "Remarks": "string",
+                "IsActive": true,
+                "CreatedBy": "admin",
+                "CreatedOn":new Date(),
+                "ChangedBy": "admin",
+                "ChangedOn": new Date(),
+                "Status": 0,
+                "CustomerShipToId": 0,
+                "CustomerShipToAddress": address.AddressLine1 + ' ' + address.FloorNo + ' ' + address.UnitNo + ' ' + address.AddressLine3,
+                "Latitude": 0,
+                "Longitude": 0,
+                "Signatureimage": "string",
+                "Cameraimage": "string",
+                "OrderDateString": new Date(),
+                "CreatedFrom": "string",
+                "ShippingCost":shipping,
+                "CustomerEmail": book.EmailId,
+                "OrderDetail": [
+                  shopArray.map((item, index) => {
+                    return {
+                      "OrgId": book.OrgId,
+                      "OrderNo": "",
+                      "SlNo": index + 1,
+                      "ProductCode": item.BookId,
+                      "ProductName": item.Title,
+                      "Qty": item.CartCount,
+                      "Price": item.SellingPrice,
+                      "Foc": 0,
+                      "Total": (item.SellingPrice * item.CartCount),
+                      "ItemDiscount": 0,
+                      "ItemDiscountPerc": 0,
+                      "SubTotal": item.SellingPrice * item.CartCount,
+                      // "Tax": (item.TaxPerc) / 100 * (item.SellingCost) * (item.CartCount),
+                      // "NetTotal": ((item.TaxPerc) / 100 * (item.SellingCost) * (item.CartCount)) + (item.SellingCost) * item.CartCount,
+                      "Tax": 0,
+                      "NetTotal": Number(item.SellingPrice * item.CartCount),
+                      "TaxCode": 1,
+                      "TaxType": "E",
+                      // "TaxPerc": item.TaxPerc,
+                      "TaxPerc":0,
+                      "Remarks": "",
+                      "CreatedBy": "admin",
+                      "CreatedOn": new Date(),
+                      "ChangedBy": "admin",
+                      "ChangedOn": new Date(),
+                      "Weight": 0
+                    }
+                  })  
+                ],
+                "DeliveryAmount": 0
+              }
+
               const existingOrderDetails = JSON.parse(localStorage.getItem('orderDetails')) || [];
               existingOrderDetails.length = 0; 
-              existingOrderDetails.push(temp);
+              existingOrderDetails.push(temp2);
               localStorage.setItem('orderDetails', JSON.stringify(existingOrderDetails));
 
-              handleCheckout();
+              // handleCheckout();
         }
 
       }else{
@@ -611,7 +688,7 @@ function getTotalPrice() {
                                 <Grid container justifyContent='space-between' sx={{padding:'20px'}}>
                                     {addressData && addressData.length > 0 && addressData.map((item, index) => (
                                     <>
-                                        <Grid key={index} xs={12} md={5.8} mt={2} sx={{ border: selectedAddress === item.DeliveryId ? '2px solid #ff4d04' : '1px solid grey' }} onClick={(e) => handleAddressSelect(item.DeliveryId)}>
+                                        <Grid key={index} xs={12} md={5.8} mt={2} sx={{ border: selectedAddress === item.DeliveryId ? '2px solid #ff4d04' : '1px solid grey' }} onClick={(e) => handleAddressSelect(item.DeliveryId , item)}>
                                         < DeleteIcon 
                                         sx={{float:'right' , marginTop:'-12px' , marginRight:'-12px' , color:'#ff4d04' , cursor:'pointer'}} 
                                         onClick={(e)=> {handleClickOpen(item.OrgId , item.DeliveryId , item.CustomerId , item.Name)}} />
@@ -642,7 +719,7 @@ function getTotalPrice() {
                             <Typography className="typo7">Delivery Date</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                {/* <div className="date-input-container">
+                                <div className="date-input-container">
                                     <label htmlFor="datePicker">Select Delivery Date:</label>
                                     <input
                                         type="date"
@@ -652,9 +729,9 @@ function getTotalPrice() {
                                         min={today}
                                         max={maxDate}
                                     />
-                                    </div> */}
+                                    </div>
 
-                                  <FormControl>
+                                  {/* <FormControl>
                                     <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
                                     <RadioGroup
                                       aria-labelledby="demo-controlled-radio-buttons-group"
@@ -665,7 +742,7 @@ function getTotalPrice() {
                                       <FormControlLabel value="female" control={<Radio />} label="Female" />
                                       <FormControlLabel value="male" control={<Radio />} label="Male" />
                                     </RadioGroup>
-                                  </FormControl>
+                                  </FormControl> */}
                                 <Grid container justifyContent='flex-end' sx={{padding:'20px'}}>
                                     <Button className="combtn3" onClick={(e)=>{handleNext(3)}}>Next Step</Button>
                                 </Grid>
@@ -770,17 +847,25 @@ function getTotalPrice() {
                                     />
                                 </PayPalScriptProvider> */}
 
-                                <PayPalScriptProvider options={{ 
-                                    clientId: "ARczUVWk1e-x6ejyg0HiZpTzhHrUOkwEFl5bEN603Re_g29aKHtH9QTc7OICazEmdXh0nAg-RSiIuCED",
-                                     currency: "SGD",
-                                }}>
-                                      <PayPalButtons
-                                        createOrder={(data, actions) => createOrder(data, actions)}
-                                        onApprove={(data, actions) => onApprove(data, actions)}
-                                        onCancel={(data) => onCancel(data)}
-                                        style={{ layout: 'vertical' }}
-                                    />
-                                </PayPalScriptProvider>
+                              {openPayment ? ( 
+                                <>
+                                  <PayPalScriptProvider options={{ 
+                                        clientId: "ARczUVWk1e-x6ejyg0HiZpTzhHrUOkwEFl5bEN603Re_g29aKHtH9QTc7OICazEmdXh0nAg-RSiIuCED",
+                                        currency: "SGD",
+                                    }}>
+                                          <PayPalButtons
+                                            createOrder={(data, actions) => createOrder(data, actions)}
+                                            onApprove={(data, actions) => onApprove(data, actions)}
+                                            onCancel={(data) => onCancel(data)}
+                                            style={{ layout: 'vertical' }}
+                                        />
+                                    </PayPalScriptProvider>
+                                </>
+                              ) : ( 
+                                <>
+                                  <h1>Please select payment options</h1>
+                                </>
+                              ) }
 
                             </Grid>
                         </Grid>

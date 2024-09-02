@@ -15,10 +15,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Auth from '../Auth/auth';
 import { useAuth } from '../Auth/AuthContet';
-import { Link } from 'react-router-dom';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
@@ -42,6 +42,7 @@ import { getWishlistData, getBookData, removeWishlistData } from '../../apiCalls
 import { toast } from 'react-toastify'
 import { book } from '../../config';
 import { getValue, setValue } from '../../utility';
+
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -134,6 +135,11 @@ const Header = () => {
 
   useEffect(() => {
     setSubtotal(0);
+
+
+    //     localStorage.setItem('bookUserCart', JSON.stringify({}));
+
+    // localStorage.clear();
   
     const storedUserId = ((JSON.parse(localStorage.getItem('bookUserToken')) || [])[0] || {}).B2CCustomerId;
   
@@ -308,7 +314,7 @@ const handleAddtoCart = async (code , count) => {
 
   return (
     <>
-    <HeaderL1 />
+    {/* <HeaderL1 /> */}
 
       {/* Mobile Header */}
       <AppBar  position='relative' sx={{  background:'white', display: { md: 'none', sm: 'block' }}}>
@@ -376,7 +382,7 @@ const handleAddtoCart = async (code , count) => {
               <img onclick={handleHome} src='https://www.basheergraphic.com/cdn/shop/t/1/assets/logo.png?v=162072033459672328741473575341' width='250px' alt='def2' />
             </Grid>
             <Grid  item md={7} >
-              <Grid  container justifyContent='center'>
+              {/* <Grid  container justifyContent='center'>
                 <Grid item >
                 <div className="about-container">
                 <Button
@@ -485,7 +491,8 @@ const handleAddtoCart = async (code , count) => {
                     }}
                   />
                 </Grid>
-              </Grid>
+              </Grid> */}
+              <HeaderL2 />
             </Grid>
             <Grid item md={2} sx={{paddingLeft:'50px'}}>
              <Grid container direction='row' justifyContent='space-between'>
@@ -543,7 +550,6 @@ const handleAddtoCart = async (code , count) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <HeaderL2 />
     </>
   );
 };

@@ -19,11 +19,14 @@ const TagTwoBooks  = (item) => {
 
     const data = item.item;
 
-
     const [changeCount , setChangeCount] = useState(0);
 
 
     useEffect(()=>{
+
+      // localStorage.clear();
+
+
         setValue(changeCount);
       },[changeCount])
 
@@ -268,7 +271,7 @@ const TagTwoBooks  = (item) => {
                 <Grid item md={3}>
                     <img onClick={(e) => { handleProduct(data.BookId) }} src={data.BookImage || "https://ap-bookory.myshopify.com/cdn/shop/files/20.jpg?v=1688356240"} alt="d1" width='100%' style={{ borderRadius: '20px' , maxHeight:'200px' }} />
                 </Grid>
-                <Grid item md={8} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Grid item md={7.5} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Grid onClick={(e)=>{handleProduct(data.BookId)}} sx={{cursor:'pointer'}}>
                     <Grid><Typography className="typo2" sx={{padding:'2px 0'}}>{truncateName(data.Title,35)}</Typography></Grid>
                     <Grid><Typography className="typo3" sx={{padding:'2px 0'}}>{truncateAuth(data.AuthorName,40)}</Typography></Grid>
@@ -282,6 +285,40 @@ const TagTwoBooks  = (item) => {
                     <Grid><Typography className="typo4" style={{ padding: '2px 0' }}>S$ {data.SellingPrice.toFixed(2)}</Typography></Grid>
                     </Grid>
                 </Grid>
+
+                <Grid item md={1} display="flex">
+                  <Grid container direction="column" justifyContent='space-between'>
+                    <Grid item>
+                      {isINWishlist ? (
+                            <span><FavoriteBorderIcon sx={{cursor:'pointer', width:'30px' ,  background:'#F65D4E' , color:'white' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleRemoveFromWishlist(data.BookId)}} /></span>
+                        ):(
+                            <span><FavoriteBorderIcon sx={{cursor:'pointer', width:'30px' , background:'white' , color:'black' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleAddtoWishlist(data.BookId , data.Title)}} /></span>
+                        )}                    </Grid>
+                    <Grid item>
+                      {isInCart ? (
+                            <span><ShoppingCartOutlinedIcon sx={{cursor:'pointer', width:'30px' , background:'#F65D4E' , color:'white' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleRemoveFromCart(data.BookId)}} /></span>
+                        ):(
+                            <span><ShoppingCartOutlinedIcon sx={{cursor:'pointer', width:'30px' , background:'white' , color:'black' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleAddtoCart(data.BookId)}} /></span>
+                        )}                    </Grid>
+                    <Grid item>
+                    <RemoveRedEyeIcon onClick={(e)=>{handleProduct(data.BookId)}} sx={{width:'30px' ,cursor:'pointer',  background:'white' , color:'black' , padding:'13px 10px', borderRadius:'50%'}} />
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                  {/* <div className="option-buttons">
+                        {isINWishlist ? (
+                            <span><FavoriteBorderIcon sx={{width:'30px' ,  background:'#F65D4E' , color:'white' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleRemoveFromWishlist(data.BookId)}} /></span>
+                        ):(
+                            <span><FavoriteBorderIcon sx={{width:'30px' , background:'white' , color:'black' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleAddtoWishlist(data.BookId , data.Title)}} /></span>
+                        )}
+                        {isInCart ? (
+                            <span><ShoppingCartOutlinedIcon sx={{width:'30px' , background:'#F65D4E' , color:'white' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleRemoveFromCart(data.BookId)}} /></span>
+                        ):(
+                            <span><ShoppingCartOutlinedIcon sx={{width:'30px' , background:'white' , color:'black' , padding:'13px 10px', borderRadius:'50%'}} onClick={(e)=>{handleAddtoCart(data.BookId)}} /></span>
+                        )}
+                        <span><RemoveRedEyeIcon onClick={(e)=>{handleProduct(data.BookId)}} sx={{width:'30px' , background:'white' , color:'black' , padding:'13px 10px', borderRadius:'50%'}} /></span>
+                    </div> */}
                 </Grid>
             </Grid>
         </>

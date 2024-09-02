@@ -10,7 +10,6 @@ import TagOneBooks from '../components/homepage/tag1';
 
 const BookList = () => {
 
-
     const { tagCode } = useParams();
 
     const [tagData , setTagData] = useState();
@@ -18,6 +17,8 @@ const BookList = () => {
     const [tadTitle , setTagTitle] = useState();
 
     useEffect(() => {
+        // localStorage.clear();
+
         const fetchData = async () => {
           try {
 
