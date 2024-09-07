@@ -1,0 +1,26 @@
+/* .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f8f8; 
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+   */
+
+
+   .footer{
+    margin-top: 100px;
+   }
+   .footerlist{
+    padding: 0px !important;
+    list-style-type: none;
+   }
+   .footerlist li{
+    padding: 5px 0px;
+   }

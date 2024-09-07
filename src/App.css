@@ -1,0 +1,36 @@
+.typo1{
+  font-size: 1.4rem !important;
+}
+.typo2{
+  font-size:1rem !important;
+  font-weight: bold !important;
+  color: #2e6ed5 !important;
+}
+.typo3{
+  font-size: 0.85rem !important;
+  color:grey !important;
+
+}
+.typo5{
+  font-weight:bold !important;
+  font-size:0.9rem !important;
+  padding:4px 0 !important;
+}
+.typo6{
+  font-size:0.9rem !important;
+  padding:4px 0 !important;
+}
+.typo7{
+  font-size:1.4rem !important;
+  font-weight:bold !important;
+  border-bottom: 3px solid #2e6ed5 !important;
+}
+.typo10{
+  font-size: 0.8rem !important;
+}
+
+@media (max-width: 450px) {
+  .typo7{
+    font-size:1.9rem !important;
+  }
+}
