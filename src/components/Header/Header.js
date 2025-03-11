@@ -520,6 +520,7 @@ const handleAddtoCart = async (code , count) => {
                       ):(
                         <>
                           <Typography 
+                          pt={1}
                           sx={{color:'black' , 
                           fontWeight:'bold', 
                           cursor:'pointer'}} 
@@ -527,7 +528,7 @@ const handleAddtoCart = async (code , count) => {
                           aria-haspopup="true"
                           aria-expanded={open ? 'true' : undefined}
                           onClick={handleClick}
-                          >< AccountCircleIcon /></Typography>
+                          >< AccountCircleIcon  /></Typography>
                           <Menu
                           id="basic-menu"
                           anchorEl={anchorEl}

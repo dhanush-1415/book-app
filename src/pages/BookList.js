@@ -7,6 +7,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { getByTagData } from '../apiCalls';
 import TagOneBooks from '../components/homepage/tag1';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BookList = () => {
 
@@ -39,7 +41,7 @@ const BookList = () => {
             if (data.Message === 'Sucess') {
                 setTagData(data.Data);
             } else {
-              alert("Something went wrong");
+              toast.error(`${data.Message} in getting books`);
             }
           } catch (error) {
             console.error('Error fetching banner data:', error);

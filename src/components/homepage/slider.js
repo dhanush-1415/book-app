@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { getBannerData } from '../../apiCalls';
+import { toast } from 'react-toastify';
 
 const HomeSlider = () => {
   const [bannerData, setBannerData] = useState(null);
@@ -14,7 +15,7 @@ const HomeSlider = () => {
         if (data.Message === 'Sucess') {
           setBannerData(data.Data); 
         } else {
-          alert("Something went wrong");
+          toast.error("Something went wrong in getting banner data");
         }
       } catch (error) {
         console.error('Error fetching banner data:', error);
@@ -56,7 +57,7 @@ const HomeSlider = () => {
           </div>
         ))
       ) : (
-        <img src="https://ap-bookory.myshopify.com/cdn/shop/files/20.jpg?v=1688356240" alt="d1" width="270px"/>
+        <img src="https://ap-bookory.myshopify.com/cdn/shop/files/20.jpg?v=168835624" alt="d1" width="270px"/>
       )}
     </Carousel>
   );
